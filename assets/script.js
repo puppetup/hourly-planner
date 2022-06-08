@@ -1,4 +1,3 @@
-
 var updateMoment = function() {
     var today = moment();
     $('#currentDay').text(today.format('MMMM Do YYYY, h:mm:ss a'));
@@ -10,11 +9,14 @@ setInterval(function(){
 }, 1000)
 
 
-kSchedule()
+
+
+var schedule = new Array(9);
 
 function saveTask() {
 
-    getSchedule()
+    
+
     var taskTextArea = $(this).siblings('textArea');
     var taskValue = taskTextArea.val();
     var timeId = $(this).siblings('div').attr('id');
@@ -34,7 +36,7 @@ function saveTask() {
 
 }
 
-var schedule = new Array(9);
+
 
 function getSchedule() {
     var storedPairs = localStorage.getItem('schedule');
@@ -46,10 +48,10 @@ function getSchedule() {
 function displaySchedule() {
     getSchedule();
     for (let i= 0; i < schedule.length; i++) {
-        var scheduleIndex = schedule[i];
+        var taskObject= schedule[i];
         var textArea = $('#' + (i + 9));
-        if (scheduleIndex) {
-            var x = scheduleIndex.entry;
+        if (taskObject) {
+            var x = taskObject.entry;
             textArea.val(x)
         }
     }
