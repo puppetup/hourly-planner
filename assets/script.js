@@ -1,3 +1,4 @@
+var today = moment();
 var updateMoment = function() {
     var today = moment();
     $('#currentDay').text(today.format('MMMM Do YYYY, h:mm:ss a'));
@@ -9,13 +10,14 @@ setInterval(function(){
 }, 1000)
 
 
-
+displaySchedule();
+setColors();
 
 var schedule = new Array(9);
 
-function saveTask() {
+$('button').click(function() {
 
-    
+    getSchedule()
 
     var taskTextArea = $(this).siblings('textArea');
     var taskValue = taskTextArea.val();
@@ -34,27 +36,36 @@ function saveTask() {
     
 
 
-}
-
-
+});
 
 function getSchedule() {
-    var storedPairs = localStorage.getItem('schedule');
-    if (storedPairs) {
+    var storedSchedule = localStorage.getItem("schedule");
+    if (storedSchedule) {
         schedule = JSON.parse(storedSchedule);
     }
 }
 
 function displaySchedule() {
     getSchedule();
-    for (let i= 0; i < schedule.length; i++) {
-        var taskObject= schedule[i];
+    for (let i = 0; i < schedule.length; i++) {
+        var scheduleItem = schedule[i];
         var textArea = $('#' + (i + 9));
-        if (taskObject) {
-            var x = taskObject.entry;
+        if (scheduleItem) {
+            var x = scheduleItem.entry;
             textArea.val(x)
         }
     }
 }
 
-$('.saveBtn').on('click', saveTask)
+function setColors() {
+    var currentTime = parseInt(today.format('H'));
+    for (let i = 9; i <= 17; i++) {
+        if (i === currentTime) {
+            $('#' + i).css('background-color', '#ff6961');
+        } else if (i > currentTime) {
+            $('#' + i).css('background-color', '#77dd77');
+        } else {
+            $('#' + i).css('background-color', '#d3d3d3');
+        }
+    }
+}
