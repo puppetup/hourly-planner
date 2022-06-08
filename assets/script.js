@@ -1,5 +1,5 @@
 
-
+var scheduleArray = new Array(9)
 var updateMoment = function() {
     var today = moment();
     $('#currentDay').text(today.format('MMMM Do YYYY, h:mm:ss a'));
@@ -11,17 +11,20 @@ setInterval(function(){
 }, 1000)
 
 function saveTask() {
-    var taskText = $(this).siblings('textArea');
-    var task = taskText.val();
-    var time = $(this).siblings('div');
-    var hour = time.text()
-    
-  
+    var taskTextArea = $(this).siblings('textArea');
+    var taskValue = taskTextArea.val();
+    var timeId = $(this).siblings('div').attr('id');
+    console.log(taskValue, timeId)
+    var taskObject = {
+         time: parseInt(timeId),
+         task: taskValue
+
+     }
     
 
-    
+    scheduleArray.splice((taskObject.time - 9), 1 , taskObject)
 
-    localStorage.setItem();
+    localStorage.setItem('schedule', JSON.stringify(scheduleArray));
     
 
 
