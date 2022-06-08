@@ -16,7 +16,7 @@ function saveTask() {
     var time = $(this).siblings('div');
     var hour = time.text()
     
-  console.log(task, hour);
+  
     
 
     
